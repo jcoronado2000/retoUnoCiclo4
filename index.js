@@ -1,0 +1,43 @@
+/**
+ * EndPoint
+ */
+
+ const endPointUser = "http://localhost:8080/api/user";
+
+ let email ;
+ let password ;
+
+ function iniciarSesion(){
+
+    $.ajax({
+        method:"GET",
+        url: endPointUser+"/"+email+"/"+password,
+        success: function (data) {
+
+            if(data.id){
+                swal("Bienvenido", data.name, "success");
+            }else{
+                swal("info", "No existe un usuario", "warning");
+            }
+            console.log(data);
+        }
+    });
+
+ }
+
+
+ function validarDatos(){
+
+    email = $("#exampleInputEmailInicio").val();
+    password = $("#exampleInputPasswordInicio").val();
+
+    if(email == "" || password == ""){
+        swal("info", "Hay campos vacios", "warning");
+    }else if(!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(email)){
+        swal("info", "Email invalido", "warning");
+    }else{
+        iniciarSesion();
+    }
+
+    
+}
