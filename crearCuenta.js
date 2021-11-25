@@ -52,8 +52,26 @@ function validarDatos(){
     }else if(!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(email)){
         swal("info", "Email invalido", "warning");
     }else{
-        registrarData();
+        validarCorreo();
     }
 
     
+}
+
+function validarCorreo(){
+
+    let email = $("#exampleInputEmail").val();
+
+    $.ajax({
+        method:"GET",
+        url: endPointUser+"/"+email,
+        success: function (data) {
+            if(data == true){
+                swal("info", "Correo ya existe", "warning");
+            }else{
+                registrarData();
+            }
+            console.log(data);
+        }
+    });
 }
